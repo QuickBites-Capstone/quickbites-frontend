@@ -39,7 +39,6 @@ const modalVisible = ref(false);
 const valid = ref(false);
 const product = ref(createInitialProduct());
 const categories = ref([]);
-
 const productSubmissionSuccess = ref(false);
 
 const showModal = () => {
@@ -48,6 +47,7 @@ const showModal = () => {
 
 const closeModal = () => {
     modalVisible.value = false;
+    resetProduct();
 };
 
 const fetchCategories = async () => {
@@ -61,7 +61,7 @@ const fetchCategories = async () => {
 
 const submitProduct = async () => {
     if (!valid.value) return;
-
+    console.log('Product before upload:', product.value);
     const formData = createFormData(product.value);
     try {
         await axios.post('/api/products', formData, {
@@ -71,7 +71,7 @@ const submitProduct = async () => {
         });
         productSubmissionSuccess.value = true;
         setTimeout(() => {
-            location.reload();
+            closeModal();
         }, 1500);
     } catch (error) {
         handleError('Error submitting product:', error);
