@@ -12,7 +12,9 @@
     "axios": "^1.7.7",
     "core-js": "^3.37.1",
     "dotenv": "^16.4.5",
+    "laravel-echo": "^1.16.1",
     "lottie-web": "^5.12.2",
+    "pusher-js": "^8.4.0-rc2",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
     "vuetify": "^3.6.11"

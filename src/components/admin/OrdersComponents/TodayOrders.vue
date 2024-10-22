@@ -19,6 +19,8 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
+const emit = defineEmits();
+
 const loading = ref(true);
 const error = ref(null);
 const orders = ref([]);
@@ -38,6 +40,30 @@ const fetchTodayOrders = async () => {
 
 onMounted(fetchTodayOrders);
 defineExpose({ fetchTodayOrders });
+
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
+
+const orderId = ref(null);
+
+const echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'f6fbd657f371022d0e05',
+    cluster: 'ap1',
+    forceTLS: true,
+});
+
+onMounted(() => {
+    echo.private('orders.*').listen('.order.status.updated', (event) => {
+        console.log('Order status updated:', event.order);
+
+        if (event.order.status === 'ready') {
+            emit('order-status-updated', event.order);
+        }
+    });
+});
 </script>
 
 <style></style>

@@ -3,8 +3,10 @@
         <Sidebar :isDrawerOpen="isDrawerOpen" @update:isDrawerOpen="toggleDrawer" />
         <Header v-if="!isCartPage" :isDrawerOpen="isDrawerOpen" @toggle-drawer="toggleDrawer" />
         <v-container>
-            <router-view />
+            <router-view @order-status-updated="showOrderReadyModal" />
         </v-container>
+
+        <Ready v-if="showReadyModal" :order="currentOrder" @close="closeModal" />
     </div>
 </template>
 
@@ -18,8 +20,20 @@ const isCartPage = computed(() => {
 });
 
 const isDrawerOpen = ref(false);
+const showReadyModal = ref(false);
+const currentOrder = ref(null);
 
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value;
+};
+
+const showOrderReadyModal = (order) => {
+    currentOrder.value = order;
+    showReadyModal.value = true;
+};
+
+const closeModal = () => {
+    showReadyModal.value = false;
+    currentOrder.value = null;
 };
 </script>
