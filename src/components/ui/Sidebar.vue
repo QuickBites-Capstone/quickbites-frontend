@@ -81,6 +81,7 @@ const isActive = (path) => {
 const isUserAuthenticated = ref(!!localStorage.getItem("token"));
 const customerName = ref('');
 const userAvatar = ref('');
+const currentCustomerId = ref(null);
 
 const handleLogout = async () => {
   logout();
@@ -97,6 +98,7 @@ onMounted(async () => {
     });
     customerName.value = `${response.data.first_name}`;
     userAvatar.value = response.data.profile_picture;
+    currentCustomerId.value = response.data.id;
   } catch (error) {
     console.error(`Error fetching customer name:`, error);
   }

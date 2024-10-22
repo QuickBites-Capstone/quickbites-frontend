@@ -5,6 +5,8 @@
         <v-container>
             <router-view />
         </v-container>
+
+        <Ready :currentCustomerId="currentCustomerId" />
     </div>
 </template>
 
