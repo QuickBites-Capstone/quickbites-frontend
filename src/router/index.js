@@ -4,9 +4,12 @@ import { routes } from 'vue-router/auto-routes'
 import someRoutes from './someRoutes';
 import { isLoggedIn } from '@/pages/AdminCMS/adminAuthServiceProvider/adminAuthService';
 import { getAuth } from '../pages/auth/authServiceProvider/authService';
-
-
+import { cart } from '@/stores/cart';
+import index from "@/pages/index.vue";
+import Cart from "@/pages/Cart.vue";
+import Checkout from "@/pages/Checkout.vue";
 import NotFound from '@/pages/404.vue';
+
 
 
 const router = createRouter({
@@ -18,9 +21,28 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       component: NotFound,
     },
-  
+    { path: "/", component: index },
+    { path: "/cart", component: Cart },
+    {
+      path: "/checkout",
+      component: Checkout,
+      beforeEnter: (to, from, next) => {
+        console.log('Before Enter Checkout'); // Add this line
+        const hasStoredCart = !!localStorage.getItem('cart');
+        const hasProductsInCart = cart.products.value.length > 0;
+    
+        console.log('Stored Cart:', hasStoredCart);
+        console.log('Products in Cart:', hasProductsInCart);
+    
+        if (!hasStoredCart || !hasProductsInCart) {
+          window.$snackbar("Your cart is empty. Please add items to proceed.", "error");
+          next('/'); // Redirect to the menu if the cart is empty
+        } else {
+          next(); // Proceed to checkout
+        }
+      },
+    },
   ],
-  
 });
 
 router.beforeEach((to, from, next) => {

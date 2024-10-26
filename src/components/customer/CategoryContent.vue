@@ -43,6 +43,7 @@
 
 <script setup>
 import { ref, watch, onMounted, computed } from "vue";
+import { useRouter } from 'vue-router';
 import axios from "axios";
 import { cart } from "@/stores/cart";
 import { getAuth } from '@/pages/auth/authServiceProvider/authService';
@@ -55,6 +56,7 @@ const props = defineProps({
   },
 });
 
+const router = useRouter();
 const products = ref([]);
 const loading = ref(false);
 const productQuantities = ref({});
@@ -111,6 +113,7 @@ const addToCart = async (product) => {
 
   if (!customerId) {
     console.error("Customer is not logged in.");
+    router.push('/auth/login');
     return;
   }
 
