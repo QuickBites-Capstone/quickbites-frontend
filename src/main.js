@@ -6,7 +6,7 @@ import axios from 'axios';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.1.11:8000';
 
 axios.defaults.baseURL = API_URL;
 
