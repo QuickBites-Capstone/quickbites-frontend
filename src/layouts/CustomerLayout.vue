@@ -5,6 +5,8 @@
         <v-container>
             <router-view />
         </v-container>
+
+        <Receiver />
     </div>
 </template>
 

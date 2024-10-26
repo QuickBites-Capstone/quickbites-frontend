@@ -170,6 +170,7 @@ onMounted(async () => {
   cartProducts.value = cart.products.value;
 });
 
+// test new
 const getCartId = async () => {
   const { customer } = getAuth();
   if (!customer) {

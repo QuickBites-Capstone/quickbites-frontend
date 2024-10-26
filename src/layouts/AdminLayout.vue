@@ -4,6 +4,8 @@
         <v-main>
             <slot />
         </v-main>
+
+        <Receiver />
     </v-layout>
 </template>
 
