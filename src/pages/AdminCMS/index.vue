@@ -32,7 +32,8 @@
                             </div>
                             <div class="right-container">
                                 <div class="overlay"></div>
-                                <img src="/girl-eating.jpg" class="cover-image" height="100%" width="100%" />
+                                <img src="../../../public/girl-eating.jpg" class="cover-image" height="100%"
+                                    width="100%" />
                             </div>
                         </div>
                     </v-app>

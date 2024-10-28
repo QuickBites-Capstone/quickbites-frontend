@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-touch="{ left: () => swipe('Left'), right: () => swipe('Right') }">
         <Sidebar :isDrawerOpen="isDrawerOpen" @update:isDrawerOpen="toggleDrawer" />
         <Header v-if="!isCartPage" :isDrawerOpen="isDrawerOpen" @toggle-drawer="toggleDrawer" />
         <v-container>
@@ -24,4 +24,13 @@ const isDrawerOpen = ref(false);
 const toggleDrawer = () => {
     isDrawerOpen.value = !isDrawerOpen.value;
 };
+
+const swipe = (direction) => {
+    if (direction === 'Right') {
+        isDrawerOpen.value = true;
+    } else if (direction === 'Left') {
+        isDrawerOpen.value = false;
+    }
+};
+
 </script>

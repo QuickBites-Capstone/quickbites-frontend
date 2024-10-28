@@ -6,7 +6,7 @@
           <v-icon>mdi-cart</v-icon>
         </v-badge>
         <v-icon color="grey-darken-4" v-else>
-          mdi-cart
+          mdi-cart-outline
         </v-icon>
       </v-btn>
     </template>

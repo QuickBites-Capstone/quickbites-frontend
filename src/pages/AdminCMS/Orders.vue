@@ -54,10 +54,15 @@ const todayOrdersRef = ref(null);
 const historyOrdersRef = ref(null);
 
 const refreshOrders = () => {
+    loading.value = true;
     if (tab.value === 'today' && todayOrdersRef.value) {
-        todayOrdersRef.value.fetchTodayOrders();
+        todayOrdersRef.value.fetchTodayOrders().finally(() => {
+            loading.value = false;
+        });
     } else if (tab.value === 'history' && historyOrdersRef.value) {
-        historyOrdersRef.value.fetchHistoryOrders();
+        historyOrdersRef.value.fetchHistoryOrders().finally(() => {
+            loading.value = false;
+        });
     }
 };
 </script>

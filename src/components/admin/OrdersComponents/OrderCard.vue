@@ -1,6 +1,7 @@
 <template>
     <v-card class="custom-radius w-100 me-5 mb-5" :max-width="400"
-        :style="{ opacity: order.order_status.name === 'Complete' ? 0.5 : 1 }">
+        :style="{ opacity: order.order_status.name === 'Complete' ? 0.5 : 1 }"
+        :disabled="order.order_status.name === 'Cancelled'">
         <v-col>
             <div class="d-flex flex-wrap align-center justify-space-between">
                 <h3>{{ order.customer?.first_name || 'Unknown' }} {{ order.customer?.last_name || 'Unknown' }}</h3>
@@ -39,8 +40,7 @@
             <div class="d-flex flex-wrap align-center justify-space-between">
                 <span>Order {{ order.order_number }} / {{ order.cart.payment_method ? order.cart.payment_method.name :
                     'Not Specified'
-                    }},
-                    Paid</span>
+                    }}</span>
                 <div>
                     <span v-if="order.order_status.name === 'Pending'" class="pending">
                         <v-icon>mdi-circle-medium</v-icon>
@@ -149,7 +149,7 @@
                 </v-row>
 
                 <v-row v-if="order.order_status.name === 'Cancelled'" class="action-buttons mt-auto">
-                    <v-btn class="custom-radius" color="primary" height="50px" width="70%" flat disabled>
+                    <v-btn class="custom-radius" color="primary" variant="tonal" height="50px" width="100%" flat>
                         Order Cancelled
                     </v-btn>
                 </v-row>

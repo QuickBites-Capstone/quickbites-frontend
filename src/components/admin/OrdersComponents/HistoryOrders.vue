@@ -10,7 +10,7 @@
             <p>No orders available.</p>
         </v-row>
         <v-row v-if="!loading && !error && orders.length > 0">
-            <OrderCard v-for="order in orders" :key="order.id" :order="order" />
+            <OrderCard v-for="order in sortedOrders" :key="order.id" :order="order" />
         </v-row>
     </v-col>
 </template>
@@ -35,6 +35,10 @@ const fetchHistoryOrders = async () => {
         loading.value = false;
     }
 };
+
+const sortedOrders = computed(() => {
+    return [...orders.value].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+});
 
 onMounted(fetchHistoryOrders);
 defineExpose({ fetchHistoryOrders });

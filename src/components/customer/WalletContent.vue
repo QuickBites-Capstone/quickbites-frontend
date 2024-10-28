@@ -9,7 +9,7 @@
           </div>
           <div class="text-center">
             <v-card-title class="font-weight-bold">
-              {{ isBalanceHidden ? '****' : `₱ ${customer?.balance?.toLocaleString()}.00` }}
+              {{ isBalanceHidden ? '****' : `₱ ${customer?.balance?.toLocaleString()}` }}
             </v-card-title>
             <v-card-text><small>Balance</small></v-card-text>
           </div>

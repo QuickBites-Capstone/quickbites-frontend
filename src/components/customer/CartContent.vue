@@ -1,104 +1,57 @@
 <template>
   <div>
     <v-row class="d-flex pb-0 mb-10 px-0 justify-space-between align-center">
-      <v-btn
-        to="/"
-        size="small"
-        class="button-text"
-        variant="text"
-        color="black"
-      >
+      <v-btn to="/" size="small" class="button-text" variant="text" color="black">
         <v-icon class="justify-start">mdi-arrow-left</v-icon>
       </v-btn>
       <h2>My Cart</h2>
 
       <v-menu activator="parent" offset-y>
         <template v-slot:activator="{ props }">
-          <v-btn
-            class="button-text"
-            variant="text"
-            size="small"
-            color="black"
-            v-bind="props"
-          >
+          <v-btn class="button-text" variant="text" size="small" color="black" v-bind="props">
             <v-icon>mdi-dots-horizontal</v-icon>
           </v-btn>
         </template>
 
         <v-list class="dropdown-menu ml-auto" width="200">
           <v-list-item @click="orderMore">
-            <v-list-item-title
-              ><v-icon>mdi-cart-plus</v-icon> Order more</v-list-item-title
-            >
+            <v-list-item-title><v-icon>mdi-cart-plus</v-icon> Order more</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="clearAllProducts" class="text-red">
-            <v-list-item-title
-              ><v-icon>mdi-delete-empty-outline</v-icon> Clear
-              cart</v-list-item-title
-            >
+            <v-list-item-title><v-icon>mdi-delete-empty-outline</v-icon> Clear
+              cart</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
     </v-row>
 
     <v-container fluid class="px-0 d-flex flex-column">
-      <v-row
-        class="flex-grow-1"
-        v-if="cartProducts.length === 0"
-        style="justify-content: center; align-items: center"
-      >
-        <LottieAnimation
-          :animationData="animationData"
-          width="200px"
-          height="200px"
-        />
+      <v-row class="flex-grow-1" v-if="cartProducts.length === 0" style="justify-content: center; align-items: center">
+        <LottieAnimation :animationData="animationData" width="200px" height="200px" />
         <span class="empty-title my-2">Your cart is empty.</span>
         <v-btn variant="text">
-          <router-link color="primary" class="back-menu-link" to="/"
-            >Go back to menu to order</router-link
-          >
+          <router-link color="primary" class="back-menu-link" to="/">Go back to menu to order</router-link>
         </v-btn>
       </v-row>
 
       <v-row class="flex-grow-1" v-else>
-        <v-col
-          v-for="product in cartProducts"
-          :key="product.id"
-          cols="12"
-          sm="6"
-          md="4"
-          class="border-b-sm"
-        >
+        <v-col v-for="product in cartProducts" :key="product.id" cols="12" sm="6" md="4" class="border-b-sm">
           <v-row class="custom-radius product-card pb-3">
             <v-card class="image-holder ml-3 custom-radius">
-              <v-img
-                :src="product.image"
-                alt="Product Image"
-                class="product-image"
-                height="100%"
-                width="100%"
-                cover
-              />
+              <v-img :src="product.image_url" alt="Product Image" class="product-image" height="100%" width="100%"
+                cover />
             </v-card>
             <v-col>
               <v-card-title class="text-subtitle-1 text-wrap">{{
                 product.name
               }}</v-card-title>
               <v-row align="center">
-                <v-btn
-                  variant="text"
-                  rounded="pill"
-                  @click="decrementQuantity(product.id)"
-                >
+                <v-btn variant="text" rounded="pill" @click="decrementQuantity(product.id)">
                   <v-icon>mdi-minus</v-icon>
                 </v-btn>
                 <p>{{ product.quantity }}</p>
-                <v-btn
-                  variant="text"
-                  rounded="pill"
-                  @click="incrementQuantity(product.id)"
-                >
+                <v-btn variant="text" rounded="pill" @click="incrementQuantity(product.id)">
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </v-row>
@@ -113,11 +66,7 @@
 
       <div v-if="cartProducts.length > 0" class="gap"></div>
 
-      <v-card
-        v-if="cartProducts.length > 0"
-        class="bottom-section action-cards w-100"
-        elevation="10"
-      >
+      <v-card v-if="cartProducts.length > 0" class="bottom-section action-cards w-100" elevation="10">
         <v-col>
           <v-row align="center" justify="space-between">
             <v-col>
@@ -130,21 +79,12 @@
         </v-col>
 
         <v-col>
-          <v-btn
-  class="custom-radius w-100 mb-3"
-  height="50"
-  color="black"
-  :to="{ path: '/checkout', query: { total: totalAmount } }"
->
-  Proceed to checkout
-</v-btn>
+          <v-btn class="custom-radius w-100 mb-3" height="50" color="black"
+            :to="{ path: '/checkout', query: { total: totalAmount } }">
+            Proceed to checkout
+          </v-btn>
 
-          <v-btn
-            class="custom-radius w-100 font-weight-bold"
-            height="50"
-            variant="tonal"
-            to="/"
-          >
+          <v-btn class="custom-radius w-100 font-weight-bold" height="50" variant="tonal" to="/">
             Order more
           </v-btn>
         </v-col>
@@ -238,7 +178,7 @@ const decrementQuantity = async (productId) => {
     if (product.quantity > 1) {
       product.quantity--;
       await updateCart(productId, product.quantity);
-   
+
     } else {
       await removeFromCart(productId);
     }
@@ -260,7 +200,7 @@ const removeFromCart = async (productId) => {
       (product) => product.id !== productId
     );
     cart.removeProduct(productId);
-    
+
   } catch (error) {
     console.error("Failed to remove product from cart:", error);
   }

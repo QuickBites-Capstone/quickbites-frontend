@@ -10,7 +10,7 @@
             <p>No orders available for today.</p>
         </v-row>
         <v-row v-if="!loading && !error && orders.length > 0">
-            <OrderCard v-for="order in orders" :key="order.id" :order="order" />
+            <OrderCard v-for="order in sortedOrders" :key="order.id" :order="order" />
         </v-row>
     </v-col>
 </template>
@@ -23,6 +23,7 @@ const loading = ref(true);
 const error = ref(null);
 const orders = ref([]);
 
+// Function to fetch today's orders
 const fetchTodayOrders = async () => {
     loading.value = true;
     try {
@@ -36,7 +37,25 @@ const fetchTodayOrders = async () => {
     }
 };
 
-onMounted(fetchTodayOrders);
+const sortedOrders = computed(() => {
+    return [...orders.value].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+});
+
+
+let debounceTimer = null;
+
+const debouncedFetchTodayOrders = () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fetchTodayOrders, 300);
+};
+
+onMounted(() => {
+    fetchTodayOrders();
+    window.Echo.channel('orders').listen('NewOrderCreated', (event) => {
+        debouncedFetchTodayOrders();
+    });
+});
+
 defineExpose({ fetchTodayOrders });
 </script>
 
