@@ -59,6 +59,7 @@ import { defineProps, defineEmits, computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { logout, getAuth } from "@/pages/auth/authServiceProvider/authService";
 import axios from 'axios';
+import { cart } from '@/stores/cart';
 
 
 const props = defineProps({

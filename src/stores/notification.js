@@ -15,10 +15,10 @@ export const useNotificationStore = defineStore('notification', {
     },
   },
   actions: {
-    async fetchNotifications(customerId) {
+    async fetchNotifications(customerId, page) {
       const { token } = getAuth();
       try {
-        const response = await axios.get(`/api/notifications?customer_id=${customerId}`, {
+        const response = await axios.get(`/api/notifications?customer_id=${customerId}&page=${page}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -29,7 +29,7 @@ export const useNotificationStore = defineStore('notification', {
       }
     },
     addNotification(notification) {
-      this.notifications.unshift(notification); // Add new notifications to the front
+      this.notifications.unshift(notification);
     },
     async markAsRead(notificationId) {
       const notification = this.notifications.find(n => n.id === notificationId);
