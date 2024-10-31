@@ -266,8 +266,15 @@ const confirmOrder = async () => {
     selectedPickupOption.value = false;
     activeIndex.value = false;
   } catch (error) {
-    console.error(`Order failed:`, error);
-    window.$snackbar(`Order failed! Please try again.`, "error");
+    if(error.response && error.response.status === 400){
+      window.$snackbar(`Low in stocks, order something else or try again later`, `error`);
+      totalPrice.value = 0;
+      selectedPickupOption.value = false;
+      activeIndex.value = false;
+    } else{
+      window.$snackbar(`Order failed! Please try again.`, "error");
+      console.error(`Order failed:`, error);
+    }
   } finally {
     loading.value = false;
   }

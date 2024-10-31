@@ -3,7 +3,7 @@
     <v-row align="center">
       <v-col cols="12" sm="8" md="4" class="login-col">
         <div class="text-h6 mb-5">Create an account</div>
-        <v-form ref="formRef" v-model="isFormValid" @submit.prevent="register">
+        <v-form ref="formRef" v-model="isFormValid" @submit.prevent="submitForm">
           <v-text-field v-model="form.firstName" :rules="[rules.required]" label="Enter your first name"
             variant="outlined" class="custom-radius"></v-text-field>
 
@@ -24,9 +24,9 @@
             <router-link class="terms-text" to="/terms">Terms and Condition</router-link>
           </div>
 
+          <!-- Move v-btn inside v-form for proper form submission handling -->
+          <v-btn type="submit" :loading="loading" height="53" class="button-text w-100 mt-1">Sign Up</v-btn>
         </v-form>
-        <v-btn type="submit" @click="submitForm" :loading="loading" height="53" class="button-text w-100 mt-1">Sign
-          Up</v-btn>
         <div class="mt-4">
           <p>
             Already have an account?
@@ -41,6 +41,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { setAuth } from "./authServiceProvider/authService";
 
 const formRef = ref(null);
 const isFormValid = ref(false);
@@ -75,25 +76,10 @@ const rules = {
 const confirmPasswordRule = (value) =>
   value === form.value.password || "Passwords must match.";
 
-const login = async () => {
-  try {
-    const response = await axios.post("/api/login", {
-      email: form.value.email,
-      password: form.value.password,
-    });
-    window.localStorage.setItem('token', response.data.token);
-    setTimeout(() => {
-      window.location.href = `/UploadProfile`;
-    }, 1500);
-  } catch (error) {
-    window.$snackbar(`Login failed!`, `error`);
-  }
-};
-
 const register = async () => {
   loading.value = true;
   try {
-    await axios.post(
+    const response = await axios.post(
       "/api/register",
       {
         first_name: form.value.firstName,
@@ -109,9 +95,20 @@ const register = async () => {
         },
       }
     );
-    window.$snackbar(`Registration completed successfully!`, `success`);
-    await login();
+
+    if (response?.data?.token && response?.data?.customer) {
+      setAuth(response.data.token, response.data.customer);
+      window.$snackbar(`Registration completed successfully!`, `success`);
+      
+      setTimeout(() => {
+        window.location.href = `/UploadProfile`;
+      }, 1500);
+    } else {
+      window.$snackbar(`Oops! Something went wrong.`, "error");
+    }
+
   } catch (error) {
+    console.error(error)
     window.$snackbar(`Please fill in all required fields!`, `error`);
   } finally {
     loading.value = false;
@@ -124,6 +121,7 @@ const submitForm = () => {
   }
 };
 </script>
+
 <style scoped>
 .checkbox-container {
   display: flex;

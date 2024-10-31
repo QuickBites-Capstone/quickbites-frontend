@@ -1,7 +1,11 @@
 import { ref } from 'vue';
+import { getAuth } from '@/pages/auth/authServiceProvider/authService';
 
 const loadCartFromLocalStorage = () => {
-  const storedCart = localStorage.getItem('cart');
+  const { customer } = getAuth();
+  if (!customer) return { products: [], count: 0 }; // Return empty cart if no customer
+
+  const storedCart = localStorage.getItem(`cart_${customer.id}`);
   return storedCart ? JSON.parse(storedCart) : { products: [], count: 0 };
 };
 
@@ -9,18 +13,25 @@ const cartData = loadCartFromLocalStorage();
 const products = ref(cartData.products);
 const count = ref(cartData.count);
 
+const saveCartToLocalStorage = () => {
+  const { customer } = getAuth();
+  if (!customer) return; 
+
+  localStorage.setItem(`cart_${customer.id}`, JSON.stringify({ products: products.value, count: count.value }));
+};
+
 const addProduct = (product) => {
   const existingProduct = products.value.find((p) => p.id === product.id);
   
   if (existingProduct) {
-    existingProduct.quantity++; 
+    existingProduct.quantity++;
   } else {
-    product.quantity = 1; 
+    product.quantity = 1;
     products.value.push(product);
   }
   
   count.value++;
-  saveCartToLocalStorage(); 
+  saveCartToLocalStorage();
 };
 
 const incrementQuantity = (productId) => {
@@ -33,15 +44,14 @@ const incrementQuantity = (productId) => {
 };
 
 const decrementQuantity = (productId) => {
-  const product = products.value.find(p => p.id === productId);
+  const product = products.value.find((p) => p.id === productId);
   if (product) {
     if (product.quantity > 1) {
       product.quantity--;
       count.value--;
-      saveCartToLocalStorage(); 
-    } else if (product.quantity === 1) {
-   
-      removeProduct(productId); 
+      saveCartToLocalStorage();
+    } else {
+      removeProduct(productId);
     }
   }
 };
@@ -49,23 +59,21 @@ const decrementQuantity = (productId) => {
 const removeProduct = (productId) => {
   const productIndex = products.value.findIndex(p => p.id === productId);
   if (productIndex !== -1) {
-
     const removedProduct = products.value[productIndex];
-    count.value -= removedProduct.quantity; 
-    products.value.splice(productIndex, 1); 
-
+    count.value -= removedProduct.quantity;
+    products.value.splice(productIndex, 1);
     saveCartToLocalStorage();
   }
 };
 
 const clearCart = () => {
-  products.value.splice(0); 
+  products.value = [];
   count.value = 0;
-  localStorage.removeItem('cart'); 
-};
 
-const saveCartToLocalStorage = () => {
-  localStorage.setItem('cart', JSON.stringify({ products: products.value, count: count.value }));
+  const { customer } = getAuth();
+  if (customer) {
+    localStorage.removeItem(`cart_${customer.id}`);
+  }
 };
 
 const getProductCount = () => count.value;
