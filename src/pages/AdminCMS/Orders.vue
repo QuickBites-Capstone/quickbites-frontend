@@ -21,7 +21,7 @@
                                     <v-spacer></v-spacer>
 
                                     <RefreshButton @refresh="refreshOrders" :loading="loading" class="me-3" />
-                                    <ManualOrder />
+                                    <!-- <ManualOrder /> -->
                                 </v-row>
                             </v-col>
 
