@@ -6,6 +6,7 @@
         @focus="onFocus" @blur="closeSuggestions" @click:clear="clearSearch" solo />
     </v-row>
 
+
     <v-list v-if="showSuggestions && (suggestions.length > 0 || (hasSearched && suggestions.length === 0))"
       class="suggestions-dropdown"
       style="position: absolute; z-index: 10; top: 50px; width: 100%; background-color: white; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); border-radius: 8px;">
@@ -13,6 +14,7 @@
       <v-list-item v-if="hasSearched && suggestions.length === 0">
         <v-list-item-title>No items found</v-list-item-title>
       </v-list-item>
+
 
       <v-list-item v-for="item in suggestions" :key="item.id" @click="selectSuggestion(item)" v-else>
         <v-list-item-title>
@@ -50,13 +52,10 @@ const handleSearch = debounce(async () => {
     hasSearched.value = true;
     try {
       const response = await axios.get(`/api/search`, {
-        params: { query: searchQuery.value }, // Send the original query
+        params: { query: searchQuery.value },
       });
       const products = response.data;
-
-      // Compare names in lowercase for case-insensitive matching
       const searchedProduct = products.find(item => item.name.toLowerCase() === searchQuery.value.toLowerCase());
-
       if (searchedProduct) {
         const filteredProducts = products.filter(item => item.id !== searchedProduct.id);
         suggestions.value = [searchedProduct, ...filteredProducts];
