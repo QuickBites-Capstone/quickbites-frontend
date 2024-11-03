@@ -14,18 +14,31 @@
             label="Enter your email address" variant="outlined" class="custom-radius"></v-text-field>
           <v-text-field v-model="form.phoneNumber" type="number" label="Enter your phone number (optional)"
             variant="outlined" class="custom-radius"></v-text-field>
-          <v-text-field v-model="form.password" :rules="[rules.required, rules.min]" type="password" required
-            label="Enter your password" variant="outlined" class="custom-radius"></v-text-field>
-          <v-text-field v-model="form.confirmPassword" :rules="[rules.required, confirmPasswordRule]" required
-            type="password" label="Enter your confirm password" variant="outlined" class="custom-radius"></v-text-field>
 
-          <div class="checkbox-container">
-            <v-checkbox value="value"></v-checkbox>
-            <router-link class="terms-text" to="/terms">Terms and Condition</router-link>
+          <div class="d-flex password-field">
+            <v-text-field v-model="form.password" :rules="[rules.required, rules.min]"
+              :type="passwordHidden ? 'password' : 'text'" class="custom-radius" label="Enter your password"
+              variant="outlined" required />
+            <v-btn @click="togglePasswordVisibility" icon class="show-password" variant="text">
+              <v-icon>{{ passwordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+            </v-btn>
           </div>
 
+          <div class="d-flex password-field">
+            <v-text-field v-model="form.confirmPassword" :rules="[rules.required, confirmPasswordRule]"
+              :type="confirmPasswordHidden ? 'password' : 'text'" class="custom-radius"
+              label="Enter your confirm password" variant="outlined" required />
+            <v-btn @click="toggleCofirmPasswordVisibility" icon class="show-password" variant="text">
+              <v-icon>{{ confirmPasswordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+            </v-btn>
+          </div>
+
+          <v-checkbox v-model="termsAccepted" :rules="[rules.terms]" label="Terms and Condition" required />
+
           <!-- Move v-btn inside v-form for proper form submission handling -->
-          <v-btn type="submit" :loading="loading" height="53" class="button-text w-100 mt-1">Sign Up</v-btn>
+          <v-btn type="submit" :disabled="!termsAccepted" :loading="loading" height="53"
+            class="button-text w-100 mt-1">Sign Up</v-btn>
+
         </v-form>
         <div class="mt-4">
           <p>
@@ -42,6 +55,18 @@
 import { ref } from "vue";
 import axios from "axios";
 import { setAuth } from "./authServiceProvider/authService";
+
+const passwordHidden = ref(true);
+const confirmPasswordHidden = ref(true);
+const termsAccepted = ref(false);
+
+const togglePasswordVisibility = () => {
+  passwordHidden.value = !passwordHidden.value;
+};
+
+const toggleCofirmPasswordVisibility = () => {
+  confirmPasswordHidden.value = !confirmPasswordHidden.value;
+};
 
 const formRef = ref(null);
 const isFormValid = ref(false);
@@ -64,6 +89,7 @@ const resetForm = () => {
     password: "",
     confirmPassword: "",
   };
+  termsAccepted.value = false;
 };
 
 const rules = {
@@ -71,6 +97,7 @@ const rules = {
   email: (value) => /.+@.+\..+/.test(value) || "E-mail must be valid.",
   min: (value) =>
     value.length >= 8 || "Password must be at least 8 characters.",
+  terms: (value) => value || "You must accept the terms and conditions.",
 };
 
 const confirmPasswordRule = (value) =>
@@ -99,7 +126,7 @@ const register = async () => {
     if (response?.data?.token && response?.data?.customer) {
       setAuth(response.data.token, response.data.customer);
       window.$snackbar(`Registration completed successfully!`, `success`);
-      
+
       setTimeout(() => {
         window.location.href = `/UploadProfile`;
       }, 1500);
@@ -142,5 +169,15 @@ const submitForm = () => {
 .login-link {
   text-decoration: underline;
   color: #171826;
+}
+
+.password-field {
+  position: relative;
+}
+
+.show-password {
+  position: absolute;
+  right: 0%;
+  top: 5%;
 }
 </style>
