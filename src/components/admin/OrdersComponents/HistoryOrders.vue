@@ -27,10 +27,11 @@ const fetchHistoryOrders = async () => {
     loading.value = true;
     try {
         const response = await axios.get('/api/orders');
-        orders.value = response.data;
+        // Ensure the response contains an array
+        orders.value = Array.isArray(response.data) ? response.data : [];
     } catch (err) {
         error.value = 'Failed to fetch history orders. Please try again.';
-        console.error(err);
+        console.error('Fetch Error:', err); // Log more details for debugging
     } finally {
         loading.value = false;
     }
