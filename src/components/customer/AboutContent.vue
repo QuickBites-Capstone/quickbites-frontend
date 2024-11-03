@@ -56,6 +56,11 @@ import { ref, computed } from 'vue';
 
 const memberDetails = ([
    { "name": "Joshua Paulo", "image": "https://i.pinimg.com/736x/72/9e/75/729e75e6eff8759a79bf0860066b8d60.jpg" },
+   { "name": "Charles", "image": "https://i.pinimg.com/564x/ba/0e/8f/ba0e8fca261197d524790ce1d30fecd9.jpg" },
+   { "name": "Jan Paul", "image": "https://i.pinimg.com/474x/ea/7b/eb/ea7bebb4b53131c072b4664b0ddaff27.jpg" },
+   { "name": "Christian Rey", "image": "https://i.pinimg.com/736x/03/2e/8b/032e8bc72db192e45a35bb1fa4b63e3b.jpg" },
+   { "name": "Memphis Iverson", "image": "https://i.pinimg.com/1200x/4a/21/df/4a21df13ac9137d0127384d78c2fd2e6.jpg" },
+   { "name": "Joreme", "image": "https://i.pinimg.com/736x/14/fe/34/14fe346b296c2475df1918f048ecffc0.jpg" },
 ]);
 
 const currentIndex = ref(0);
