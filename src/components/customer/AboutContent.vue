@@ -55,7 +55,7 @@
 import { ref, computed } from 'vue';
 
 const memberDetails = ([
-   { "name": "Joshua Paulo", "image": "../../../public/about/luffy.jpg" },
+   { "name": "Joshua Paulo", "image": "https://i.pinimg.com/736x/72/9e/75/729e75e6eff8759a79bf0860066b8d60.jpg" },
    { "name": "Charles", "image": "../../../public/about/zoro.jpg" },
    { "name": "Jan Paul", "image": "../../../public/about/usopp.jpg" },
    { "name": "Christian Rey", "image": "../../../public/about/chopper.webp" },
