@@ -17,12 +17,19 @@
 
 
       <v-list-item v-for="item in suggestions" :key="item.id" @click="selectSuggestion(item)" v-else>
-        <v-list-item-title>
-          {{ item.name }}
-          <small>({{ item.category.name }})</small>
-          <span v-if="item.label" class="badge" :style="getBadgeStyle(item.label)">
-            {{ item.label }}
-          </span>
+        <v-list-item-title class="d-flex align-center">
+          <div>
+            <v-card class="custom-radius product-image-holder me-2">
+              <v-img :src="item.image_url" alt="Product Image" class="product-image" height="100%" width="100%" cover />
+            </v-card>
+          </div>
+          <div>
+            {{ item.name }}
+            <small>({{ item.category.name }})</small>
+            <span v-if="item.label" class="badge" :style="getBadgeStyle(item.label)">
+              {{ item.label }}
+            </span>
+          </div>
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -128,5 +135,22 @@ const getBadgeStyle = (label) => {
   margin-left: 10px;
   font-size: 0.8rem;
   display: inline-block;
+}
+
+.product-card {
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.product-image-holder {
+  width: 50px;
+  height: 50px;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
 }
 </style>
