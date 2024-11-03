@@ -57,11 +57,10 @@ const login = async () => {
       window.$snackbar(`Oops! Something went wrong.`, "error");
     }
   } catch (error) {
-    if (error.response) {
-      error.response.data.message ||
-        window.$snackbar("Invalid credentials!", "error");
+    if (error.response && error.response.status === 401 ) {
+        window.$snackbar("Incorrect email or password!", "error");
     } else {
-      window.$snackbar("Invalid credentials!", "error");
+      window.$snackbar(`Oops! Something went wrong.`, "error");
     }
   } finally {
     loading.value = false;
