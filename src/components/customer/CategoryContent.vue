@@ -9,27 +9,11 @@
     </v-row>
 
     <v-row v-else-if="hasProducts">
-      <v-col
-        v-for="product in sortedProducts"
-        :key="product.id"
-        cols="12"
-        sm="6"
-        md="4"
-      >
-        <v-card
-          class="custom-radius product-card py-2"
-          height="90"
-          :class="{ disabled: product.stock_quantity === 0 }"
-        >
+      <v-col v-for="product in sortedProducts" :key="product.id" cols="12" sm="6" md="4">
+        <v-card class="custom-radius product-card py-2" height="90" :class="{ disabled: product.stock_quantity === 0 }">
           <v-card class="custom-radius product-image-holder">
-            <v-img
-              :src="product.image_url"
-              alt="Product Image"
-              class="product-image"
-              height="100%"
-              width="100%"
-              cover
-            />
+            <v-img :src="product.image_url" alt="Product Image" class="product-image" height="100%" width="100%"
+              cover />
           </v-card>
           <v-col class="pa-0">
             <v-card-title class="text-subtitle-1 py-0">
@@ -39,7 +23,8 @@
               {{ "₱" + product.price.toFixed(2) }}
             </v-card-subtitle>
             <v-card-subtitle class="text-subtitle-2 py-0">
-              <small>{{ statusMapping[product.status_id] }}</small>
+              <small v-if="product.stock_quantity >= 1">{{ product.stock_quantity }} Available</small>
+              <small v-else>Sold Out</small>
             </v-card-subtitle>
           </v-col>
           <v-btn @click.prevent="addToCart(product)" color="primary add-button" size="" height="100">
@@ -90,11 +75,6 @@ const categoryName = computed(() => {
   const category = props.categories.find((category) => category.id === props.categoryId);
   return category ? category.name : "Unknown Category";
 });
-
-const statusMapping = {
-  1: "Available",
-  2: "Sold Out",
-};
 
 const fetchProducts = async () => {
   if (loading.value || !hasMoreProducts.value) return;
@@ -152,7 +132,7 @@ const orderProducts = () => {
   const otherProducts = products.value.filter(
     product => product.id !== props.searchedProductId && product.id !== props.highlightedProductId
   );
-  
+
   return [
     ...(searchedProduct ? [searchedProduct] : []),
     ...(highlightedProduct && highlightedProduct.id !== searchedProduct?.id ? [highlightedProduct] : []),
@@ -205,6 +185,6 @@ const addToCart = async (product) => {
 
 .add-button {
   width: 40px;
-  border-radius: 0!important;
+  border-radius: 0 !important;
 }
 </style>

@@ -18,7 +18,8 @@
               "₱" + product.price.toFixed(2)
             }}</v-card-subtitle>
             <v-card-subtitle class="text-subtitle-2 py-0">
-              <small>{{ statusMapping[product.status_id] }}</small>
+              <small v-if="product.stock_quantity >= 1">{{ product.stock_quantity }} Available</small>
+              <small v-else>Sold Out</small>
             </v-card-subtitle>
           </v-col>
 
@@ -49,11 +50,6 @@ const loading = ref(false);
 const page = ref(1);
 const hasMoreProducts = ref(true);
 const router = useRouter();
-
-const statusMapping = {
-  1: "Available",
-  2: "Sold Out",
-};
 
 const fetchProducts = async () => {
   if (loading.value || !hasMoreProducts.value) return;
