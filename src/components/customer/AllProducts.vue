@@ -18,7 +18,7 @@
               "₱" + product.price.toFixed(2)
             }}</v-card-subtitle>
             <v-card-subtitle class="text-subtitle-2 py-0">
-              <small v-if="product.stock_quantity >= 1">Available</small>
+              <small v-if="product.stock_quantity >= 1">Available • {{ product.stock_quantity }}</small>
               <small v-else>Sold Out</small>
             </v-card-subtitle>
           </v-col>
