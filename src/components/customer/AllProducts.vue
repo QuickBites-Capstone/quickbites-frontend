@@ -158,4 +158,8 @@ const addToCart = async (product) => {
   width: 40px !important;
   border-radius: 0 !important;
 }
+
+.v-btn:active {
+  background-color: green !important;
+}
 </style>
