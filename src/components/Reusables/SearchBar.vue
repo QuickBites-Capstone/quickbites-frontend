@@ -23,12 +23,11 @@
               <v-img :src="item.image_url" alt="Product Image" class="product-image" height="100%" width="100%" cover />
             </v-card>
           </div>
-          <div>
-            {{ item.name }}
-            <small>({{ item.category.name }})</small>
-            <span v-if="item.label" class="badge" :style="getBadgeStyle(item.label)">
-              {{ item.label }}
-            </span>
+          <div class="suggestion-item">
+             <span class="item-name text-wrap">{{ item.name }}</span>
+             <span v-if="item.label" class="badge" :style="getBadgeStyle(item.label)">
+                  {{ item.label }}
+             </span>
           </div>
         </v-list-item-title>
       </v-list-item>
@@ -127,14 +126,30 @@ const getBadgeStyle = (label) => {
   max-height: 200px;
   overflow-y: auto;
 }
-
+.suggestion-item{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+.item-name{
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  max-width: 60%;
+  white-space: normal;
+  word-wrap: break-word;
+}
 .badge {
   color: white;
   padding: 2px 10px;
   border-radius: 12px;
   margin-left: 10px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   display: inline-block;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .product-card {

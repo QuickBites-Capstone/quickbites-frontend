@@ -16,7 +16,7 @@
               cover />
           </v-card>
           <v-col class="pa-0">
-            <v-card-title class="text-subtitle-1 py-0">
+            <v-card-title class="text-subtitle-1 py-0 text-wrap">
               {{ product.name }}
             </v-card-title>
             <v-card-subtitle class="text-subtitle-2 py-0">
