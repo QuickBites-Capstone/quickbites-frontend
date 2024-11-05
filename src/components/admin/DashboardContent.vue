@@ -55,7 +55,7 @@
                             class="d-flex mt-3 align-center justify-space-between">
                             <div class="d-flex align-center">
                                 <v-card class="custom-radius me-2" width="50px" height="50px">
-                                    <v-img :src="item.image" height="100%" width="100%" cover />
+                                    <v-img :src="item.image_url" height="100%" width="100%" cover />
                                 </v-card>
                                 {{ item.name }}
                             </div>
