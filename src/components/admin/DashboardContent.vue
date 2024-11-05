@@ -57,7 +57,7 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { Line } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler } from 'chart.js';
 
 const stats = ref({
     total_orders: 0,
@@ -113,7 +113,7 @@ const statsList = computed(() => [
     },
 ]);
 
-ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler);
 
 const chartData = ref({
     labels: [
