@@ -21,10 +21,12 @@
                                             <v-tab class="custom-radius my-auto" value="supplies">Supplies</v-tab>
                                         </v-tabs>
                                     </v-card>
-
-                                    <v-spacer></v-spacer>
+                                    <v-spacer class="custom-spacer"></v-spacer>
+                                    <v-row class="align-center">
+                                    <SearchBar :height="5" class="custom-height mr-10" />
 
                                     <AddNewProduct />
+                                    </v-row>
                                 </v-row>
                             </v-col>
 
@@ -68,4 +70,11 @@ const tab = ref('meals');
 const loading = ref(false);
 </script>
 
-<style></style>
+<style scoped>
+.custom-spacer{
+    width: 0!important;
+}
+.custom-height{
+    height: 20px!important;
+}
+</style>

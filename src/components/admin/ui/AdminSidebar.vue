@@ -5,8 +5,8 @@
             <!-- Admin Info -->
             <template v-slot:prepend>
                 <v-list-item prepend-avatar="https://cdn-icons-png.flaticon.com/512/599/599184.png" lines="three">
-                    <v-list-item-title>{{ adminName || 'P Diddy' }}</v-list-item-title>
-                    <v-list-item-subtitle><small>{{ adminEmail || 'pee@diddy.com' }}</small></v-list-item-subtitle>
+                    <v-list-item-title>{{ adminName }}</v-list-item-title>
+                    <v-list-item-subtitle><small>{{ adminEmail }}</small></v-list-item-subtitle>
                 </v-list-item>
             </template>
 

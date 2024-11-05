@@ -12,6 +12,15 @@
         <v-row>
             <ProductTable :products="products" :updateProduct="updateProduct" :deleteProduct="deleteProduct" />
         </v-row>
+        <v-row v-if="products.length > 0">
+            <Pagination 
+                :currentPage="currentPage"
+                :totalPages="totalPages"
+                :maxVisiblePages="10"
+                @updatePage="fetchProducts"
+                @nextPages="fetchNextPages"/>
+        </v-row>
+
     </v-col>
 </template>
 
@@ -29,12 +38,19 @@ const props = defineProps({
 const loading = ref(true);
 const error = ref(null);
 const products = ref([]);
+const currentPage = ref(1);
+const totalPages = ref(1);
+const perPage = ref(5);
 
-const fetchProducts = async () => {
+const fetchProducts = async (page = 1) => {
     loading.value = true;
     try {
-        const response = await axios.get(`/api/products?category=${props.category}`);
+        const response = await axios.get(
+            `/api/products?page=${page}&per_page=${perPage.value}&category=${props.category}`);
         products.value = response.data.products;
+        currentPage.value = response.data.current_page ;
+        totalPages.value = response.data.last_page ;
+        
     } catch (err) {
         error.value = `Failed to fetch ${props.category}. Please try again.`;
         console.error(err);
@@ -42,6 +58,7 @@ const fetchProducts = async () => {
         loading.value = false;
     }
 };
+
 
 const updateProduct = async (product) => {
     try {
@@ -71,7 +88,20 @@ const deleteProduct = async (productId) => {
     }
 };
 
-onMounted(fetchProducts);
+const onUpdatePage = (page) => {
+    currentPage.value = page;
+    fetchProducts(page);
+};
+
+const onNextPage = () => {
+    if(currentPage.value < totalPages.value){
+        onUpdatePage(currentPage.value + 1);
+    }
+};
+
+onMounted(() => {
+    fetchProducts();
+});
 </script>
 
 <style></style>

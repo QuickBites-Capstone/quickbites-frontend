@@ -1,7 +1,7 @@
 <template>
   <v-row class="mt-1 mb-5" style="position: relative;">
     <v-row class="justify-center">
-      <v-text-field v-model="searchQuery" class="custom-radius w-100" height="30px" :label="searchLabel"
+      <v-text-field v-model="searchQuery" class="custom-radius w-100" :label="searchLabel"
         prepend-inner-icon="mdi-magnify" variant="outlined" clearable hide-details="auto" @input="handleSearch"
         @focus="onFocus" @blur="closeSuggestions" @click:clear="clearSearch" solo />
     </v-row>
@@ -41,6 +41,10 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 
 const props = defineProps({
+    height: {
+    type: Number,
+    default: 30,
+  },
   searchLabel: {
     type: String,
     default: 'Search for an item',
