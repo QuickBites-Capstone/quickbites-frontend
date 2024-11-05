@@ -2,59 +2,19 @@
     <v-container fluid>
         <v-col class="mb-10">
             <v-row>
-                <v-card class="custom-radius me-5" width="100%" max-width="200px">
+                <v-card v-for="stat in statsList" :key="stat.title" class="custom-radius me-5" width="100%"
+                    max-width="200px">
                     <v-col>
                         <v-col>
-                            <v-card class="d-flex align-center justify-center rounded-pill" color="secondary"
+                            <v-card class="d-flex align-center justify-center rounded-pill" :color="stat.color"
                                 height="50px" width="50px" flat>
-                                <v-icon>mdi-hand-coin</v-icon>
+                                <v-icon>{{ stat.icon }}</v-icon>
                             </v-card>
                         </v-col>
-
-                        <v-card-title class="font-weight-bold">₱ {{ stats.daily_earnings }}</v-card-title>
-                        <v-card-subtitle>Daily Earning</v-card-subtitle>
-                    </v-col>
-                </v-card>
-
-                <v-card class="custom-radius me-5" width="100%" max-width="200px">
-                    <v-col>
-                        <v-col>
-                            <v-card class="d-flex align-center justify-center rounded-pill" color="secondary-darken-1"
-                                height="50px" width="50px" flat>
-                                <v-icon>mdi-hand-coin</v-icon>
-                            </v-card>
-                        </v-col>
-
-                        <v-card-title class="font-weight-bold">₱ {{ stats.total_earnings }}</v-card-title>
-                        <v-card-subtitle>Total Earning</v-card-subtitle>
-                    </v-col>
-                </v-card>
-
-                <v-card class="custom-radius me-5" width="100%" max-width="200px">
-                    <v-col>
-                        <v-col>
-                            <v-card class="d-flex align-center justify-center rounded-pill" color="primary"
-                                height="50px" width="50px" flat>
-                                <v-icon>mdi-account-group</v-icon>
-                            </v-card>
-                        </v-col>
-
-                        <v-card-title class="font-weight-bold">{{ stats.total_customers }}</v-card-title>
-                        <v-card-subtitle>Total Customers</v-card-subtitle>
-                    </v-col>
-                </v-card>
-
-                <v-card class="custom-radius me-5" width="100%" max-width="200px">
-                    <v-col>
-                        <v-col>
-                            <v-card class="d-flex align-center justify-center rounded-pill" color="primary-darken-1"
-                                height="50px" width="50px" flat>
-                                <v-icon>mdi-shopping</v-icon>
-                            </v-card>
-                        </v-col>
-
-                        <v-card-title class="font-weight-bold">{{ stats.total_orders }}</v-card-title>
-                        <v-card-subtitle>Total Orders</v-card-subtitle>
+                        <v-card-title class="font-weight-bold">
+                            {{ stat.value }}
+                        </v-card-title>
+                        <v-card-subtitle>{{ stat.title }}</v-card-subtitle>
                     </v-col>
                 </v-card>
             </v-row>
@@ -63,7 +23,9 @@
         <v-col>
             <v-row>
                 <v-card class="custom-radius" width="100%" max-width="400px">
-                    <v-card-title class="font-weight-bold border-b-sm">Top Selling Items</v-card-title>
+                    <v-card-title class="font-weight-bold border-b-sm">
+                        Top Selling Items
+                    </v-card-title>
                     <v-card-text>
                         <div v-for="item in topSellingItems" :key="item.id"
                             class="d-flex mt-3 align-center justify-space-between">
@@ -85,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 const stats = ref({
@@ -119,4 +81,31 @@ onMounted(() => {
     fetchDashboardStats();
     fetchTopSellingItems();
 });
+
+const statsList = computed(() => [
+    {
+        title: 'Daily Earning',
+        value: `₱ ${stats.value.daily_earnings}`,
+        color: 'secondary',
+        icon: 'mdi-hand-coin',
+    },
+    {
+        title: 'Total Earning',
+        value: `₱ ${stats.value.total_earnings}`,
+        color: 'secondary-darken-1',
+        icon: 'mdi-hand-coin',
+    },
+    {
+        title: 'Total Customers',
+        value: stats.value.total_customers,
+        color: 'primary',
+        icon: 'mdi-account-group',
+    },
+    {
+        title: 'Total Orders',
+        value: stats.value.total_orders,
+        color: 'primary-darken-1',
+        icon: 'mdi-shopping',
+    },
+]);
 </script>
