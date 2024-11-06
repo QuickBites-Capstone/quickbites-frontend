@@ -20,7 +20,7 @@
               :type="passwordHidden ? 'password' : 'text'" class="custom-radius" label="Enter your password"
               variant="outlined" required />
             <v-btn @click="togglePasswordVisibility" icon class="show-password" variant="text">
-              <v-icon>{{ passwordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+              <v-icon class="text-grey">{{ passwordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
             </v-btn>
           </div>
 
@@ -29,13 +29,15 @@
               :type="confirmPasswordHidden ? 'password' : 'text'" class="custom-radius"
               label="Enter your confirm password" variant="outlined" required />
             <v-btn @click="toggleCofirmPasswordVisibility" icon class="show-password" variant="text">
-              <v-icon>{{ confirmPasswordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+              <v-icon class="text-grey">{{ confirmPasswordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
             </v-btn>
           </div>
 
-          <v-checkbox v-model="termsAccepted" :rules="[rules.terms]" label="Terms and Condition" required />
+          <div class="d-flex align-center mb-3">
+            <v-checkbox class="d-flex align-center" v-model="termsAccepted" :rules="[rules.terms]" required />
+            <v-btn @click="showModal = true" variant="text" flat>Terms and Condition</v-btn>
+          </div>
 
-          <!-- Move v-btn inside v-form for proper form submission handling -->
           <v-btn type="submit" :disabled="!termsAccepted" :loading="loading" height="53"
             class="button-text w-100 mt-1">Sign Up</v-btn>
 
@@ -48,6 +50,8 @@
         </div>
       </v-col>
     </v-row>
+
+    <TermsModal :modelValue="showModal" @update:modelValue="showModal = $event" />
   </v-container>
 </template>
 
@@ -59,6 +63,7 @@ import { setAuth } from "./authServiceProvider/authService";
 const passwordHidden = ref(true);
 const confirmPasswordHidden = ref(true);
 const termsAccepted = ref(false);
+const showModal = ref(false);
 
 const togglePasswordVisibility = () => {
   passwordHidden.value = !passwordHidden.value;

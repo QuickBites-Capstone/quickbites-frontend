@@ -22,13 +22,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import axios from "axios";
+import { useStore } from 'vuex';
 
 const categories = ref([]);
 const activeCategory = ref(null);
-const highlightedProductId = ref(null);
-const searchedProductId = ref(null);
+const store = useStore();
+const searchedProductId = computed(() => store.getters.getSearchedProductId);
+const highlightedProductId = computed(() => store.getters.getHighlightedProductId);
 const products = ref([]);
 
 const fetchCategories = async () => {
@@ -46,8 +48,8 @@ const setActiveCategory = (categoryId) => {
 
 const navigateToCategory = (categoryId, productId) => {
   activeCategory.value = categoryId;
-  highlightedProductId.value = productId;
-  searchedProductId.value = productId;
+  store.dispatch('saveSearchedProductId', productId);
+  store.dispatch('saveHighlightedProductId', productId);
 };
 
 watch(activeCategory, async (newCategory) => {

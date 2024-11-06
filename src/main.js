@@ -5,6 +5,7 @@ import { createApp } from 'vue';
 import axios from 'axios';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import store from '@/stores/store';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,7 +20,7 @@ window.Echo = new Echo({
 });
 
 const app = createApp(App);
-
+app.use(store);
 registerPlugins(app);
 app.use(router);
 app.mount('#app');

@@ -1,6 +1,6 @@
 <template>
   <v-row class="align-center">
-    <v-app-bar scroll-behavior="hide" class="navbar" dense>
+    <v-app-bar scroll-behavior="hide" class="navbar" scroll-threshold="100" dense>
       <v-col cols="auto" class="d-md-none"></v-col>
       <v-row class="align-center">
         <v-btn icon @click="toggleDrawer" class="toggle-button">

@@ -6,6 +6,7 @@
             <router-view />
         </v-container>
 
+        <Footer />
         <Receiver />
     </div>
 </template>

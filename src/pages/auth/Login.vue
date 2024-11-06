@@ -11,7 +11,7 @@
             <v-text-field v-model="form.password" :type="passwordHidden ? 'password' : 'text'" class="custom-radius"
               label="Enter your password" variant="outlined" />
             <v-btn @click="togglePasswordVisibility" icon class="show-password" variant="text">
-              <v-icon>{{ passwordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+              <v-icon class="text-grey">{{ passwordHidden ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
             </v-btn>
           </div>
 
@@ -19,10 +19,13 @@
             In</v-btn>
         </v-form>
 
-        <div class="mt-4">
-          <p>
+        <div class="mt-5">
+          <p class="mb-3">
             Don't have an account?
             <router-link to="/auth/register" class="register-link">Sign Up</router-link>
+          </p>
+          <p>
+            <router-link to="/auth/forgot-password" class="register-link">Forgot password?</router-link>
           </p>
         </div>
       </v-col>

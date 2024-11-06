@@ -113,19 +113,29 @@ const handleScroll = () => {
   }
 };
 
-watch(
-  () => props.categoryId,
-  () => {
-    products.value = [];
-    page.value = 1;
-    hasMoreProducts.value = true;
-    fetchProducts();
+const fetchProductsUntilHighlightFound = async () => {
+  while (hasMoreProducts.value && !products.value.find(product => product.id === props.highlightedProductId)) {
+    await fetchProducts();
   }
+};
+
+watch(
+  () => props.highlightedProductId,
+  async (newHighlight) => {
+    if (newHighlight) {
+      products.value = []; 
+      page.value = 1;      
+      hasMoreProducts.value = true;
+      await fetchProductsUntilHighlightFound(); 
+    }
+  },
+  { immediate: true }
 );
 
 const hasProducts = computed(() => products.value.length > 0);
 
 const orderProducts = () => {
+ 
   const searchedProduct = products.value.find(product => product.id === props.searchedProductId);
   const highlightedProduct = products.value.find(product => product.id === props.highlightedProductId);
 
@@ -140,7 +150,16 @@ const orderProducts = () => {
   ];
 };
 
-const sortedProducts = computed(() => orderProducts());
+const sortedProducts = computed(() => {
+ 
+  if (!props.searchedProductId && !props.highlightedProductId) {
+    return products.value; 
+  }
+
+  return orderProducts();
+});
+
+
 
 const addToCart = async (product) => {
   const productId = product.id;
