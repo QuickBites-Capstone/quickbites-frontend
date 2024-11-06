@@ -12,31 +12,55 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(product, index) in products" :key="index">
+                <tr v-for="product in products" :key="product.id">
                     <td class="text-left">
                         <v-card class="custom-radius" height="80" width="80">
-                            <v-icon v-if="product.image === null" class="bg-grey-darken-1"
-                                style="font-size: 54px; height: 100%; width: 100%;">
+                            <v-img
+                                v-if="product.image_url"
+                                :src="product.image_url"
+                                class="custom-radius"
+                                alt="Product Image"
+                                width="100%"
+                                height="100%"
+                                cover
+                            />
+                            <v-icon
+                                v-else
+                                class="bg-grey-darken-1"
+                                style="font-size: 54px; height: 100%; width: 100%;"
+                            >
                                 mdi-food
                             </v-icon>
-                            <v-img v-else :src="product.image_url" class="custom-radius" alt="Product Image"
-                                width="100%" height="100%" cover />
                         </v-card>
                     </td>
 
                     <td class="text-left">
                         <div v-if="!product.isEditing">{{ product.name }}</div>
-                        <v-text-field v-else v-model="product.name" label="Edit Name" />
+                        <v-text-field
+                            v-else
+                            v-model="product.name"
+                            label="Edit Name"
+                        />
                     </td>
 
                     <td class="text-left">
                         <div v-if="!product.isEditing">{{ product.stock_quantity }}</div>
-                        <v-text-field v-else v-model="product.stock_quantity" label="Edit Quantity" type="number" />
+                        <v-text-field
+                            v-else
+                            v-model="product.stock_quantity"
+                            label="Edit Quantity"
+                            type="number"
+                        />
                     </td>
 
                     <td class="text-left">
                         <div v-if="!product.isEditing">₱ {{ product.price }}</div>
-                        <v-text-field v-else v-model="product.price" label="Edit Price" type="number" />
+                        <v-text-field
+                            v-else
+                            v-model="product.price"
+                            label="Edit Price"
+                            type="number"
+                        />
                     </td>
 
                     <td class="text-left">
@@ -44,18 +68,34 @@
                     </td>
 
                     <td class="text-left">
-                        <v-btn v-if="!product.isEditing" @click="toggleEdit(product)"
-                            prepend-icon="mdi-square-edit-outline" color="blue" variant="text"
-                            class="custom-radius me-3">
+                        <v-btn
+                            v-if="!product.isEditing"
+                            @click="toggleEdit(product)"
+                            prepend-icon="mdi-square-edit-outline"
+                            color="blue"
+                            variant="text"
+                            class="custom-radius me-3"
+                        >
                             Edit
                         </v-btn>
-                        <v-btn v-else @click="updateProduct(product)" prepend-icon="mdi-check" color="green"
-                            variant="text" class="custom-radius me-3">
+                        <v-btn
+                            v-else
+                            @click="updateProduct(product)"
+                            prepend-icon="mdi-check"
+                            color="green"
+                            variant="text"
+                            class="custom-radius me-3"
+                        >
                             Update
                         </v-btn>
 
-                        <v-btn @click="deleteProduct(product.id)" prepend-icon="mdi-trash-can-outline" color="error"
-                            variant="text" class="custom-radius">
+                        <v-btn
+                            @click="deleteProduct(product.id)"
+                            prepend-icon="mdi-trash-can-outline"
+                            color="error"
+                            variant="text"
+                            class="custom-radius"
+                        >
                             Delete
                         </v-btn>
                     </td>
@@ -68,10 +108,19 @@
 <script setup>
 import { defineProps } from 'vue';
 
-const { products, updateProduct, deleteProduct } = defineProps({
-    products: Array,
-    updateProduct: Function,
-    deleteProduct: Function,
+const props = defineProps({
+    products: {
+        type: Array,
+        required: true,
+    },
+    updateProduct: {
+        type: Function,
+        required: true,
+    },
+    deleteProduct: {
+        type: Function,
+        required: true,
+    },
 });
 
 const toggleEdit = (product) => {
@@ -79,4 +128,8 @@ const toggleEdit = (product) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.custom-radius {
+    border-radius: 10px; /* Adjust radius as needed */
+}
+</style>

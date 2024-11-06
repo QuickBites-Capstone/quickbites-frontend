@@ -11,7 +11,7 @@
 
                             <v-col>
                                 <v-row>
-                                    <v-card max-width="200" class="custom-radius d-flex align-center justify-center">
+                                    <v-card max-width="500" class="custom-radius d-flex align-center justify-center">
                                         <v-tabs v-model="tab" color="primary">
                                             <v-tab class="custom-radius my-auto" value="today">Today</v-tab>
                                             <v-tab class="custom-radius my-auto" value="history">History</v-tab>
@@ -20,7 +20,7 @@
 
                                     <v-spacer></v-spacer>
 
-                                    <RefreshButton @refresh="refreshOrders" :loading="loading" class="me-3" />
+                                    <!-- <RefreshButton @refresh="refreshOrders" :loading="loading" class="me-3" /> -->
                                     <!-- <ManualOrder /> -->
                                 </v-row>
                             </v-col>
