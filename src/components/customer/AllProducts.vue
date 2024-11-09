@@ -86,8 +86,7 @@ const handleScroll = () => {
   const scrollPosition = window.scrollY + window.innerHeight;
   const documentHeight = document.documentElement.scrollHeight;
 
-  // Check if the user is near the bottom of the page (within 200px of the bottom)
-  if (scrollPosition + 200 >= documentHeight && !loading.value && hasMoreProducts.value) {
+  if (scrollPosition + 800 >= documentHeight && !loading.value && hasMoreProducts.value) {
     fetchProducts();
   }
 };
