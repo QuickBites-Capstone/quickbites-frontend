@@ -75,6 +75,7 @@ const fetchProducts = async () => {
 onMounted(() => {
   fetchProducts();
   window.addEventListener("scroll", handleScroll);
+  window.addEventListener("touchend", handleScroll);  // Add touchend for mobile support
 });
 
 onUnmounted(() => {
@@ -82,10 +83,11 @@ onUnmounted(() => {
 });
 
 const handleScroll = () => {
-  const bottom =
-    document.documentElement.scrollHeight ===
-    window.innerHeight + window.scrollY;
-  if (bottom && !loading.value && hasMoreProducts.value) {
+  const scrollPosition = window.scrollY + window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+
+  // Check if the user is near the bottom of the page (within 200px of the bottom)
+  if (scrollPosition + 200 >= documentHeight && !loading.value && hasMoreProducts.value) {
     fetchProducts();
   }
 };

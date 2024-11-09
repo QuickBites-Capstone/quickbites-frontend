@@ -48,6 +48,8 @@ import { useRouter } from 'vue-router';
 import axios from "axios";
 import { cart } from "@/stores/cart";
 import { getAuth } from '@/pages/auth/authServiceProvider/authService';
+import { debounce } from "lodash";
+
 
 const props = defineProps({
   categoryId: Number,
@@ -76,12 +78,14 @@ const categoryName = computed(() => {
   return category ? category.name : "Unknown Category";
 });
 
-const fetchProducts = async () => {
+const fetchProducts = async (signal) => {
   if (loading.value || !hasMoreProducts.value) return;
   loading.value = true;
 
   try {
-    const response = await axios.get(`/api/categories/${props.categoryId}/products?page=${page.value}`);
+    const response = await axios.get(`/api/categories/${props.categoryId}/products?page=${page.value}`, {
+      signal,
+    });
     const newProducts = response.data.data;
 
     if (newProducts.length > 0) {
@@ -113,24 +117,68 @@ const handleScroll = () => {
   }
 };
 
-const fetchProductsUntilHighlightFound = async () => {
+const fetchProductsUntilHighlightFound = async (signal) => {
+
   while (hasMoreProducts.value && !products.value.find(product => product.id === props.highlightedProductId)) {
-    await fetchProducts();
+    try {
+  
+      await fetchProducts(signal);
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error("Error fetching products:", error);
+      }
+      break; 
+    }
   }
 };
 
+
+let abortController = null;
+let currentCategoryId = ref(null); 
+
+let isFetching = ref(false); 
+
 watch(
-  () => props.highlightedProductId,
-  async (newHighlight) => {
-    if (newHighlight) {
-      products.value = []; 
-      page.value = 1;      
-      hasMoreProducts.value = true;
-      await fetchProductsUntilHighlightFound(); 
+  () => [props.highlightedProductId, props.categoryId],
+  async ([newHighlight, newCategoryId]) => {
+
+    if (newCategoryId === currentCategoryId.value) return;
+    
+    if (isFetching.value) return;
+
+    isFetching.value = true;
+
+    products.value = [];
+    page.value = 1;
+    hasMoreProducts.value = true;
+
+    if (abortController) {
+      abortController.abort();
+    }
+
+    abortController = new AbortController();
+    const signal = abortController.signal;
+
+    currentCategoryId.value = newCategoryId;
+
+    try {
+
+      if (newHighlight) {
+        await fetchProductsUntilHighlightFound(signal); 
+      } else if (newCategoryId) {
+        await fetchProducts(signal); 
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+ 
+      isFetching.value = false;
     }
   },
   { immediate: true }
 );
+
+
 
 const hasProducts = computed(() => products.value.length > 0);
 
