@@ -62,7 +62,7 @@ onMounted(async () => {
     });
     customer.value = response.data[0];
   } catch (error) {
-    console.error(`Error fetching customer name:`, error);
+    // console.error(`Error fetching customer name:`, error);
   }
 });
 </script>

@@ -113,7 +113,7 @@ onMounted(async () => {
 const getCartId = async () => {
   const { customer } = getAuth();
   if (!customer) {
-    console.error("Customer is not logged in.");
+    // console.error("Customer is not logged in.");
     return null;
   }
 
@@ -122,7 +122,7 @@ const getCartId = async () => {
     const cartData = response.data;
     return cartData.id;
   } catch (error) {
-    console.error("Failed to retrieve cart:", error);
+    // console.error("Failed to retrieve cart:", error);
     return null;
   }
 };
@@ -131,7 +131,7 @@ const updateCart = async (productId, quantity) => {
   const cartId = await getCartId();
 
   if (!cartId) {
-    console.error("No cart found for the customer.");
+    // console.error("No cart found for the customer.");
     return;
   }
 
@@ -140,7 +140,7 @@ const updateCart = async (productId, quantity) => {
       quantity: quantity,
     });
   } catch (err) {
-    console.error("Error updating cart:", err);
+    // console.error("Error updating cart:", err);
   }
 };
 
@@ -148,7 +148,7 @@ const clearAllProducts = async () => {
   const cartId = await getCartId();
 
   if (!cartId) {
-    console.error("No cart found for the customer.");
+    // console.error("No cart found for the customer.");
     return;
   }
 
@@ -157,7 +157,7 @@ const clearAllProducts = async () => {
     cartProducts.value = [];
     cart.clearCart();
   } catch (err) {
-    console.error("Error clearing cart:", err);
+    // console.error("Error clearing cart:", err);
   }
 };
 
@@ -187,7 +187,7 @@ const removeFromCart = async (productId) => {
   const cartId = await getCartId();
 
   if (!cartId) {
-    console.error("No cart found for the customer.");
+    // console.error("No cart found for the customer.");
     return;
   }
 
@@ -200,7 +200,7 @@ const removeFromCart = async (productId) => {
     cart.removeProduct(productId);
 
   } catch (error) {
-    console.error("Failed to remove product from cart:", error);
+    // console.error("Failed to remove product from cart:", error);
   }
 };
 

@@ -95,7 +95,7 @@ const fetchProducts = async (signal) => {
       hasMoreProducts.value = false;
     }
   } catch (error) {
-    console.error("Failed to fetch products:", error);
+    // console.error("Failed to fetch products:", error);
   } finally {
     loading.value = false;
   }
@@ -121,29 +121,29 @@ const fetchProductsUntilHighlightFound = async (signal) => {
 
   while (hasMoreProducts.value && !products.value.find(product => product.id === props.highlightedProductId)) {
     try {
-  
+
       await fetchProducts(signal);
     } catch (error) {
       if (error.name !== 'AbortError') {
-        console.error("Error fetching products:", error);
+        // console.error("Error fetching products:", error);
       }
-      break; 
+      break;
     }
   }
 };
 
 
 let abortController = null;
-let currentCategoryId = ref(null); 
+let currentCategoryId = ref(null);
 
-let isFetching = ref(false); 
+let isFetching = ref(false);
 
 watch(
   () => [props.highlightedProductId, props.categoryId],
   async ([newHighlight, newCategoryId]) => {
 
     if (newCategoryId === currentCategoryId.value) return;
-    
+
     if (isFetching.value) return;
 
     isFetching.value = true;
@@ -164,14 +164,14 @@ watch(
     try {
 
       if (newHighlight) {
-        await fetchProductsUntilHighlightFound(signal); 
+        await fetchProductsUntilHighlightFound(signal);
       } else if (newCategoryId) {
-        await fetchProducts(signal); 
+        await fetchProducts(signal);
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
+      // console.error("Error fetching products:", error);
     } finally {
- 
+
       isFetching.value = false;
     }
   },
@@ -183,7 +183,7 @@ watch(
 const hasProducts = computed(() => products.value.length > 0);
 
 const orderProducts = () => {
- 
+
   const searchedProduct = products.value.find(product => product.id === props.searchedProductId);
   const highlightedProduct = products.value.find(product => product.id === props.highlightedProductId);
 
@@ -199,9 +199,9 @@ const orderProducts = () => {
 };
 
 const sortedProducts = computed(() => {
- 
+
   if (!props.searchedProductId && !props.highlightedProductId) {
-    return products.value; 
+    return products.value;
   }
 
   return orderProducts();
@@ -223,7 +223,7 @@ const addToCart = async (product) => {
     await axios.post(`/api/cart/${customerId}`, { items: [{ product_id: productId, quantity: 1 }] });
     cart.addProduct(product);
   } catch (error) {
-    console.error("Failed to add product to cart:", error);
+    // console.error("Failed to add product to cart:", error);
   }
 };
 </script>

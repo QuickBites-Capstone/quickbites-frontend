@@ -39,7 +39,7 @@ const sendMessage = () => {
         messages.value.push(message.value); // Add the sent message to the list
         message.value = ''; // Clear the input after sending
     }).catch(error => {
-        console.error("Error sending message:", error);
+        // console.error("Error sending message:", error);
     });
 };
 </script>

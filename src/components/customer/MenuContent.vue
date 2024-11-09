@@ -38,7 +38,7 @@ const fetchCategories = async () => {
     const response = await axios.get("/api/categories");
     categories.value = response.data;
   } catch (error) {
-    console.error("Failed to fetch categories:", error);
+    // console.error("Failed to fetch categories:", error);
   }
 };
 
@@ -63,7 +63,7 @@ const fetchProductsForCategory = async (categoryId) => {
     const response = await axios.get(`/api/categories/${categoryId}/products`);
     products.value = response.data;
   } catch (error) {
-    console.error("Failed to fetch products:", error);
+    // console.error("Failed to fetch products:", error);
   }
 };
 

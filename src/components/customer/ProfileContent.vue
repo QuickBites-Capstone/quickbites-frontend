@@ -119,7 +119,7 @@ async function saveEdit() {
       editMode.value = false;
       Object.assign(originalCustomer.value, customer.value);
    } catch (error) {
-      console.error(`Error saving customer information:`, error);
+      // console.error(`Error saving customer information:`, error);
    }
 }
 

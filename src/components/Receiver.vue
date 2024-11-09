@@ -43,7 +43,7 @@ onMounted(async () => {
             subscribeToMessages();
         }
     } catch (error) {
-        console.error(`Error fetching customer name:`, error);
+        // console.error(`Error fetching customer name:`, error);
     }
 });
 

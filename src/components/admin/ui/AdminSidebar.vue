@@ -69,10 +69,10 @@ onMounted(async () => {
             adminName.value = `${response.data.first_name} ${response.data.last_name}`;
             adminEmail.value = response.data.email; // Assuming email is also provided
         } catch (error) {
-            console.error('Error fetching admin data:', error.response ? error.response.data : error.message);
+            // console.error('Error fetching admin data:', error.response ? error.response.data : error.message);
         }
     } else {
-        console.error('No token found, user not authenticated');
+        // console.error('No token found, user not authenticated');
     }
 });
 </script>

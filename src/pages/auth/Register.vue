@@ -140,7 +140,7 @@ const register = async () => {
     }
 
   } catch (error) {
-    console.error(error)
+    // console.error(error)
     window.$snackbar(`Please fill in all required fields!`, `error`);
   } finally {
     loading.value = false;

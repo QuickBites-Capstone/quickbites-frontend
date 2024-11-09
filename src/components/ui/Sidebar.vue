@@ -7,7 +7,7 @@
           <v-icon v-else>mdi-account</v-icon>
         </v-avatar>
         <v-col class="ml-3">
-          <div class="text-h6">{{ customer.first_name}}</div>
+          <div class="text-h6">{{ customer.first_name }}</div>
           <div class="profile-text ml-0 mt-1 text-body-2" color="primary">
             <router-link to="/profile">
               Manage Profile
@@ -98,7 +98,7 @@ onMounted(async () => {
     });
     customer.value = response.data[0];
   } catch (error) {
-    console.error(`Error fetching customer name:`, error);
+    // console.error(`Error fetching customer name:`, error);
   }
 });
 </script>

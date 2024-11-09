@@ -103,7 +103,7 @@ const addToCart = async (product) => {
   const customerId = customer ? customer.id : null;
 
   if (!customerId) {
-    console.error("Customer is not logged in.");
+    // console.error("Customer is not logged in.");
     router.push("/auth/login");
     return;
   }
@@ -119,10 +119,10 @@ const addToCart = async (product) => {
 
     cart.addProduct(product);
   } catch (error) {
-    console.error(
-      "Failed to add product to cart:",
-      error.response ? error.response.data : error
-    );
+    // console.error(
+    //   "Failed to add product to cart:",
+    //   error.response ? error.response.data : error
+    // );
   }
 };
 </script>

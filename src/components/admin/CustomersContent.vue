@@ -68,7 +68,7 @@ const searchCustomers = async () => {
             });
             customerStore.customers = response.data;
         } catch (error) {
-            console.error('Error fetching customers:', error);
+            // console.error('Error fetching customers:', error);
         }
     } else {
         customerStore.fetchCustomers();

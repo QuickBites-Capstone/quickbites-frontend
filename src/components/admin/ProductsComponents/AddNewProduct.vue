@@ -121,7 +121,7 @@ function resetProduct() {
 }
 
 function handleError(message, error) {
-    console.error(message, error);
+    // console.error(message, error);
 }
 
 onMounted(fetchCategories);

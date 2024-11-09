@@ -35,7 +35,7 @@ const fetchReasons = async () => {
         const response = await axios.get('/api/reasons');
         reasons.value = response.data;
     } catch (error) {
-        console.error('Error fetching reasons:', error);
+        // console.error('Error fetching reasons:', error);
     }
 };
 

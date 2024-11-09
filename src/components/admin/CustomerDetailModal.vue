@@ -115,7 +115,7 @@ const addCredits = async () => {
             addCreditsDialog.value = false;
             creditAmount.value = '';
         } catch (error) {
-            console.error('Error adding credits:', error);
+            // console.error('Error adding credits:', error);
         }
     }
 };
@@ -129,7 +129,7 @@ const deductCredits = async () => {
             addCreditsDialog.value = false;
             creditAmount.value = '';
         } catch (error) {
-            console.error('Error adding credits:', error);
+            // console.error('Error adding credits:', error);
         }
     }
 };

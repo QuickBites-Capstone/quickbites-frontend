@@ -133,14 +133,14 @@ onMounted(async () => {
       customerData.value = response.data;
 
     } catch (error) {
-      console.error("Failed to fetch customer data:", error);
+      // console.error("Failed to fetch customer data:", error);
       window.$snackbar(
         `Failed to fetch customer data. Please try again.`,
         "error"
       );
     }
   } else {
-    console.error("Customer is not logged in.");
+    // console.error("Customer is not logged in.");
   }
 });
 
@@ -175,7 +175,7 @@ const confirmOrder = async () => {
       selectedPickupOption.value === 0 ? "Standard" : selectedTime.value;
 
     if (!customerData.value) {
-      console.error("Customer data not available.");
+      // console.error("Customer data not available.");
       return;
     }
 
@@ -224,7 +224,7 @@ const confirmOrder = async () => {
       activeIndex.value = false;
     } else {
       window.$snackbar(`Order failed! Please try again.`, "error");
-      console.error(`Order failed:`, error);
+      // console.error(`Order failed:`, error);
     }
   } finally {
     loading.value = false;

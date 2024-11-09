@@ -55,7 +55,7 @@ const fetchCustomers = async () => {
         });
         customers.value = response.data;
     } catch (error) {
-        console.error('Error fetching customers:', error);
+        // console.error('Error fetching customers:', error);
     }
 };
 
@@ -91,7 +91,7 @@ const submitOrder = async () => {
         console.log('Order submitted successfully:', response.data);
         modalVisible.value = false; // Close the modal after submission
     } catch (error) {
-        console.error('Error submitting order:', error);
+        // console.error('Error submitting order:', error);
     }
 };
 </script>

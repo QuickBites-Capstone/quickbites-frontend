@@ -113,7 +113,7 @@ const getOrderDetails = async () => {
 
     order.value = response.data.find((o) => o.id === parseInt(route.params.id));
   } catch (error) {
-    console.error("Error fetching order details:", error);
+    // console.error("Error fetching order details:", error);
   }
 };
 

@@ -71,7 +71,7 @@ const fetchDashboardStats = async () => {
         const response = await axios.get('/api/dashboard/stats');
         stats.value = response.data;
     } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
+        // console.error('Error fetching dashboard stats:', error);
     }
 };
 
@@ -82,7 +82,7 @@ const fetchTopSellingItems = async () => {
         const response = await axios.get('/api/dashboard/top-selling-items');
         topSellingItems.value = response.data;
     } catch (error) {
-        console.error('Error fetching top selling items:', error);
+        // console.error('Error fetching top selling items:', error);
     }
 };
 
@@ -166,7 +166,7 @@ const fetchMonthlyEarnings = async () => {
         const response = await axios.get('/api/dashboard/monthly-earnings');
         chartData.value.datasets[0].data = response.data.monthly_earnings;
     } catch (error) {
-        console.error('Error fetching monthly earnings:', error);
+        // console.error('Error fetching monthly earnings:', error);
     }
 };
 

@@ -178,7 +178,7 @@ const submitNewPassword = async () => {
         window.$snackbar(`Password changed successfully!.`, "success");
         setTimeout(() => { mainFrame(); }, 1500);
     } catch (error) {
-        console.error('Error changing password:', error.response ? error.response.data : error);
+        // console.error('Error changing password:', error.response ? error.response.data : error);
         if (error.response && error.response.status === 401) {
             handleUnauthenticated();
             loading.value = false;

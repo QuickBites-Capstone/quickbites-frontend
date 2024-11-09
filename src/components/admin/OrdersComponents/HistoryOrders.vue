@@ -31,7 +31,7 @@ const fetchHistoryOrders = async () => {
         orders.value = Array.isArray(response.data) ? response.data : [];
     } catch (err) {
         error.value = 'Failed to fetch history orders. Please try again.';
-        console.error('Fetch Error:', err); // Log more details for debugging
+        // console.error(err);
     } finally {
         loading.value = false;
     }

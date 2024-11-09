@@ -184,7 +184,7 @@ const handleCancellation = async (selectedReason) => {
         order.order_status.name = 'Cancelled';
         order.reason = { description: selectedReason };
     } catch (error) {
-        console.error('Error cancelling the order:', error);
+        // console.error('Error cancelling the order:', error);
     }
 };
 
@@ -193,7 +193,7 @@ const acceptOrder = async () => {
         await axios.patch(`/api/orders/${order.id}/status`, { status: 'accept' });
         order.order_status.name = 'In progress';
     } catch (error) {
-        console.error('Error accepting the order:', error);
+        // console.error('Error accepting the order:', error);
     }
 };
 
@@ -202,7 +202,7 @@ const markAsReady = async () => {
         await axios.patch(`/api/orders/${order.id}/status`, { status: 'ready' });
         order.order_status.name = 'Ready for pick-up';
     } catch (error) {
-        console.error('Error marking the order as ready:', error);
+        // console.error('Error marking the order as ready:', error);
     }
 };
 
@@ -211,7 +211,7 @@ const markAsComplete = async () => {
         await axios.patch(`/api/orders/${order.id}/status`, { status: 'complete' });
         order.order_status.name = 'Complete';
     } catch (error) {
-        console.error('Error marking the order as complete:', error);
+        // console.error('Error marking the order as complete:', error);
     }
 };
 </script>

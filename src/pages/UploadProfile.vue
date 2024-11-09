@@ -73,7 +73,7 @@ async function uploadImage() {
         previewImage.value = null;
         setTimeout(() => { router.push('/'); }, 1000);
     } catch (error) {
-        console.error('Error uploading image:', error);
+
     }
 }
 
@@ -87,7 +87,7 @@ onMounted(async () => {
         });
         customer.value = response.data[0];
     } catch (error) {
-        console.error(`Error fetching customer name:`, error);
+        // console.error(`Error fetching customer name:`, error);
     }
 });
 </script>

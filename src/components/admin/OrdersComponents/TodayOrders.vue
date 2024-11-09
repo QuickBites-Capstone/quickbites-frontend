@@ -31,7 +31,7 @@ const fetchTodayOrders = async () => {
         orders.value = response.data;
     } catch (err) {
         error.value = 'Failed to fetch today’s orders. Please try again.';
-        console.error(err);
+        // console.error(err);
     } finally {
         loading.value = false;
     }

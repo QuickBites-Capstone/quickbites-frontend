@@ -5,15 +5,9 @@
       <h2 class="page-title mx-auto">Notifications</h2>
     </v-row>
 
-    <v-card
-      v-for="notification in sortedNotifications"
-      :key="notification.id"
-      :to="`orderdetails/${notification.order_id}`"
-      @click="markAsRead(notification)"
-      :class="notification.is_read ? 'bg-grey-lighten-2' : ''"
-      class="custom-radius mb-3"
-      flat
-    >
+    <v-card v-for="notification in sortedNotifications" :key="notification.id"
+      :to="`orderdetails/${notification.order_id}`" @click="markAsRead(notification)"
+      :class="notification.is_read ? 'bg-grey-lighten-2' : ''" class="custom-radius mb-3" flat>
       <v-card-text>
         <p>{{ notification.order_number }}</p>
         <div class="d-flex justify-space-between mb-3">
@@ -55,12 +49,12 @@ const fetchNotifications = async () => {
       if (response.length === 0) {
         hasMoreNotifications.value = false;
       } else {
-        page.value += 1; 
+        page.value += 1;
       }
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      // console.error('Error fetching notifications:', error);
     } finally {
-      loading.value = false; 
+      loading.value = false;
     }
   }
 };
