@@ -1,12 +1,7 @@
 <template>
   <v-col>
     <v-row v-if="loading" class="d-flex justify-center">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        size="32"
-        width="4"
-      />
+      <v-progress-circular indeterminate color="primary" size="32" width="4" />
     </v-row>
 
     <v-row v-if="error" class="d-flex justify-center">
@@ -14,7 +9,8 @@
     </v-row>
 
     <v-row v-if="!loading && !error && filteredProducts.length > 0">
-      <ProductTable :products="paginatedFilteredProducts" :updateProduct="updateProduct" :deleteProduct="deleteProduct" />
+      <ProductTable :products="paginatedFilteredProducts" :updateProduct="updateProduct"
+        :deleteProduct="deleteProduct" />
     </v-row>
 
     <v-row v-if="!loading && !error && filteredProducts.length === 0">
@@ -40,13 +36,8 @@
     </v-row>
 
     <v-row v-if="filteredProducts.length > 0 && !loading && !error">
-      <Pagination 
-        :currentPage="currentPage"
-        :totalPages="totalPages"
-        :maxVisiblePages="10"
-        @updatePage="onUpdatePage"
-        @nextPages="onNextPage"
-      />
+      <Pagination :currentPage="currentPage" :totalPages="totalPages" :maxVisiblePages="10" @updatePage="onUpdatePage"
+        @nextPages="onNextPage" />
     </v-row>
   </v-col>
 </template>
@@ -86,9 +77,9 @@ const paginatedFilteredProducts = computed(() => {
 
 const fetchProducts = async () => {
   loading.value = true;
-  products.value = [];       
-  filteredProducts.value = []; 
-  totalPages.value = 1;     
+  products.value = [];
+  filteredProducts.value = [];
+  totalPages.value = 1;
 
   try {
     let page = 1;
@@ -100,7 +91,7 @@ const fetchProducts = async () => {
       );
       const pageProducts = response.data.products;
 
-      const matchingProducts = pageProducts.filter(product => 
+      const matchingProducts = pageProducts.filter(product =>
         product.name?.toLowerCase().includes(searchQueryLower) &&
         !filteredProducts.value.some(existingProduct => existingProduct.id === product.id)
       );
@@ -127,7 +118,7 @@ const fetchProducts = async () => {
 
   } catch (err) {
     error.value = 'Failed to fetch products. Please try again.';
-    console.error(err);
+    // console.error(err);
   } finally {
     loading.value = false;
   }
@@ -138,7 +129,7 @@ const debouncedFetchProducts = debounce(() => {
 }, 500);
 
 const onUpdatePage = (page) => {
-  if (page > totalPages.value || page < 1) return; 
+  if (page > totalPages.value || page < 1) return;
   currentPage.value = page;
   fetchProducts();
 };
@@ -172,7 +163,7 @@ const deleteProduct = async (productId) => {
     window.$snackbar('Product deleted successfully', 'success');
     products.value = products.value.filter(product => product.id !== productId);
     filteredProducts.value = filteredProducts.value.filter(product => product.id !== productId);
-    fetchProducts(); 
+    fetchProducts();
   } catch (error) {
     window.$snackbar(error.response?.data?.message || 'Error deleting product.', 'error');
   }
@@ -180,7 +171,7 @@ const deleteProduct = async (productId) => {
 
 watch(() => props.searchQuery, () => {
   currentPage.value = 1;
-  debouncedFetchProducts(); 
+  debouncedFetchProducts();
 });
 
 onMounted(() => {

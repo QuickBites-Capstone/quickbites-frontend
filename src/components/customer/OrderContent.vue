@@ -83,7 +83,7 @@ onMounted(async () => {
     );
     orders.value = response.data;
   } catch (error) {
-    console.error("Error fetching orders:", error);
+    // console.error("Error fetching orders:", error);
   } finally {
     loading.value = false;
   }
